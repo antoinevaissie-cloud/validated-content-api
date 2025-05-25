@@ -92,7 +92,7 @@ def search_content(request: SearchRequest):
         # Step 2: Search the database for similar content
         query = supabase.rpc('match_content', {
             'query_embedding': query_embedding,
-            'match_threshold': 0.2,  # How similar results need to be
+            'match_threshold': 0.1,  # How similar results need to be
             'match_count': request.limit
         })
         
