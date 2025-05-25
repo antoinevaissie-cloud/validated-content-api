@@ -1,5 +1,10 @@
-from dotenv import load_dotenv
-load_dotenv()
+# Load environment variables from .env file (for local development only)
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # dotenv not available (like on Vercel), environment variables are already loaded
+    pass
 
 # api/main.py - Complete file
 
