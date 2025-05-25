@@ -179,5 +179,23 @@ def delete_content(content_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")
 
+@app.get("/all")
+def get_all_content():
+    """Get all content without similarity filtering"""
+    try:
+        result = supabase.table('validated_content').select('*').order('date', desc=True).execute()
+        
+        formatted_results = []
+        for row in result.data:
+            formatted_results.append(format_content_result(row))
+        
+        return {
+            "results": formatted_results,
+            "total_count": len(formatted_results)
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Get all failed: {str(e)}")
+
 # Export the FastAPI app directly
 # Vercel will handle it natively
