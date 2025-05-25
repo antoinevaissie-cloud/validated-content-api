@@ -162,6 +162,22 @@ def add_content(request: AddContentRequest):
 def root():
     """Simple test to see if the API is working"""
     return {"message": "Validated Content API is running!", "status": "healthy"}
+@app.delete("/delete/{content_id}")
+def delete_content(content_id: str):
+    """Delete content by ID"""
+    try:
+        result = supabase.table('validated_content').delete().eq('id', content_id).execute()
+        
+        if len(result.data) == 0:
+            raise HTTPException(status_code=404, detail="Content not found")
+        
+        return {
+            "message": "Content deleted successfully",
+            "deleted_id": content_id
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")
 
 # Export the FastAPI app directly
 # Vercel will handle it natively
