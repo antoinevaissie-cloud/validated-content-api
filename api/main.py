@@ -163,6 +163,5 @@ def root():
     """Simple test to see if the API is working"""
     return {"message": "Validated Content API is running!", "status": "healthy"}
 
-# This makes FastAPI work on Vercel
-from mangum import Mangum
-handler = Mangum(app)
+# Export the FastAPI app directly
+# Vercel will handle it natively
